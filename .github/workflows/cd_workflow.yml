@@ -9,9 +9,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    env:
-      CLASPRC_JSON: ${{ secrets.CLASPRC }}
-    timeout-minutes: 10
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v3
       - name: Set up Node.js
@@ -24,7 +22,7 @@ jobs:
           npm install -g @google/clasp
       - name: Generate ~/.clasprc.json
         run: |
-          echo '${{ secrets.CLASPRC }}' > ~/.clasprc.json
+          echo '${{ secrets.CLASPRC_JSON }}' > ~/.clasprc.json
       - name: Setup SCRIPT_ID
         run: |
           if [[ ${{ github.ref }} == 'refs/heads/main' ]]; then
@@ -41,6 +39,6 @@ jobs:
       - name: Build
         run: |
           npm run build
-      - name: Deploy
+      - name: Push
         run: |
-          clasp push
+          echo y | clasp push
