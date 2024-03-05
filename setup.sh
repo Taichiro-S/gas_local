@@ -3,7 +3,7 @@
 CLASPJSON=$(cat <<-END
     {
         "scriptId": "$SCRIPT_ID",
-        "rootDir": "/home/runner/work/リポジトリ名/リポジトリ名/dist",
+        "rootDir": "./dist",
         "fileExtension": ["js"]
     }
 END
