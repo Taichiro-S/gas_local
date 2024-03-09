@@ -8,7 +8,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: ここを変更
+    environment: clasp
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v3
@@ -80,14 +80,3 @@ jobs:
       - name: Push
         run: |
           clasp push -f
-
-      - name: Set up environment variables for deployment
-        run: |
-          if [[ ${{ github.ref }} == 'refs/heads/main' ]]; then
-            echo "DEPLOY_ID=${{ secrets.PRODUCTION_DEPLOY_ID }}" >> $GITHUB_ENV
-          elif [[ ${{ github.ref }} == 'refs/heads/stg' ]]; then
-            echo "DEPLOY_ID=${{ secrets.STAGING_DEPLOY_ID }}" >> $GITHUB_ENV
-          fi
-      - name: Deploy
-        run: |
-          clasp deploy --deploymentId ${{ env.DEPLOY_ID }}
