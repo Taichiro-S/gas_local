@@ -4,11 +4,9 @@ on:
   push:
     branches:
       - main
-      - stg
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: clasp
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v3
@@ -24,20 +22,7 @@ jobs:
 
       - name: Set up environment variables for clasp.json
         run: |
-          if [[ ${{ github.ref }} == 'refs/heads/main' ]]; then
-            echo "SCRIPT_ID=${{ secrets.PRODUCTION_SCRIPT_ID }}" >> $GITHUB_ENV
-          elif [[ ${{ github.ref }} == 'refs/heads/stg' ]]; then
-            echo "SCRIPT_ID=${{ secrets.STAGING_SCRIPT_ID }}" >> $GITHUB_ENV
-          fi
-
-      - name: Generate .clasp.json
-        run: |
-          envsubst < template_clasp.json > .clasp.json
-        env:
-          SCRIPT_ID: ${{ env.SCRIPT_ID }}
-
-      - name: Set up environment variables for .clasprc.json
-        run: |
+          echo "SCRIPT_ID=${{ secrets.PRODUCTION_SCRIPT_ID }}" >> $GITHUB_ENV
           echo "ACCESS_TOKEN=${{ secrets.ACCESS_TOKEN }}" >> $GITHUB_ENV
           echo "SCOPE=${{ secrets.SCOPE }}" >> $GITHUB_ENV
           echo "TOKEN_TYPE=${{ secrets.TOKEN_TYPE }}" >> $GITHUB_ENV
@@ -48,6 +33,15 @@ jobs:
           echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}" >> $GITHUB_ENV
           echo "REDIRECT_URI=${{ secrets.REDIRECT_URI }}" >> $GITHUB_ENV
           echo "IS_LOCAL_CREDS=${{ secrets.IS_LOCAL_CREDS }}" >> $GITHUB_ENV
+
+      - name: Generate .clasp.json
+        run: |
+          envsubst < template_clasp.json > .clasp.json
+        env:
+          SCRIPT_ID: ${{ env.SCRIPT_ID }}
+
+      - name: Set up environment variables for .clasprc.json
+        run: |
 
       - name: Generate .clasprc.json
         run: |
