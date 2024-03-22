@@ -35,7 +35,7 @@ jobs:
           echo "REDIRECT_URI=${{ secrets.REDIRECT_URI }}" >> $GITHUB_ENV
           echo "IS_LOCAL_CREDS=${{ secrets.IS_LOCAL_CREDS }}" >> $GITHUB_ENV
 
-      - name: Generate .clasp.json
+      - name: Generate .clasp.json aaa
         run: |
           envsubst < template_clasp.json > .clasp.json
         env:
