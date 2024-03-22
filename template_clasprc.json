@@ -4,7 +4,7 @@
     "scope": "$SCOPE",
     "token_type": "Bearer",
     "id_token": "$ID_TOKEN",
-    "expiry_date": SET_EXPIRY_DATE,
+    "expiry_date": 1710254970032,
     "refresh_token": "$REFRESH_TOKEN"
   },
   "oauth2ClientSettings": {

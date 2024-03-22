@@ -61,6 +61,11 @@ jobs:
           mv .clasprc.json ~/.clasprc.json
           mv .clasp.json ~/.clasp.json
 
+      - name: read Credentials
+        run: |
+          cat ~/.clasprc.json
+          cat ~/.clasp.json
+
       - name: Install Dependencies
         run: |
           npm ci
